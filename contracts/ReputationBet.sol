@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-contract Reputation {
+contract ReputationBet {
     // The list of addreseses the key address trusts.
     mapping (address=>address[]) TrustedAddresses;
     // The stake assosciated with 
@@ -14,12 +14,10 @@ contract Reputation {
 
     mapping (address=>uint) TotalStake;
     
-    function stakeAndTrust(address TrustedAddress) public payable{
+    function stakeAndTrust(address TrustedAddress) public payable {
         console.log("SMART CONTRACT: SENDER %s ", msg.sender);
         TrustedAddresses[msg.sender].push(TrustedAddress);
         Stakers[TrustedAddress].push(msg.sender);
         StakedValues[TrustedAddress].push(msg.value);
-
-
     }
 }
