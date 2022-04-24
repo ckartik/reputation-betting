@@ -1,19 +1,23 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("Deploy & Stake", function () {
+  it("Should deploy the contract", async function () {
+    const RB = await ethers.getContractFactory("ReputationBet");
+    const rb = await RB.deploy();
+    await rb.deployed();
+    const [owner, addr1, addr2] = await ethers.getSigners();
+    // console.log(rb)
+    // console.log(await owner.getBalance())
+    const ad = await addr1.getAddress();
+    const stakeTx = await rb.stakeAndTrust(ad);
+    await stakeTx.wait();
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+    // const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+    // // wait until the transaction is mined
+    // await setGreetingTx.wait();
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+    // expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
 });

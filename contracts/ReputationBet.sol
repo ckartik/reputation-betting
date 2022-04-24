@@ -29,11 +29,14 @@ contract ReputationBet {
         TotalStake[TrustedAddress] += msg.value;
 
         uint val = msg.value;
-        for (uint i=0; i < TotalNumOfStakers[TrustedAddress] - 1; i++){
+        for (uint i=0; i < TotalNumOfStakers[TrustedAddress]; i++){
             Claimable[Stakers[TrustedAddress][i]] += StakedValues[TrustedAddress][i] / TotalStake[TrustedAddress];
             val -= StakedValues[TrustedAddress][i] / TotalStake[TrustedAddress];
+
+            // Here figure out the highest staker and dispurse funds to them.
         }
-        // Here figure out the highest staker and dispurse funds to them.
     }
+
+
 
 }
